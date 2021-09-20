@@ -1,26 +1,43 @@
 from . import main
-from flask import render_template,request,redirect,url_for,abort
-from ..models import User
-from .forms import UpdateProfile
+from flask import render_template,request,redirect,url_for,abort,flash
+from ..models import User,Pitch
+from .forms import PitchForm, UpdateProfile
 from .. import db,photos
-from flask_login import login_required, current_user
-from werkzeug.utils import secure_filename
+from flask_login import login_required,current_user
 
-
-@main.route('/',methods = ['GET','POST'])
-def index():
+@main.route('/')
+def pitch(title):
 
     '''
-    View root page function that returns the index page and its data
+    View movie page function that returns the movie details page and its data
     '''
-    def update_pic(self):
-        if 'audio' in request.files:
-            filename = photos.save(request.files['audio'])
-            path = f'audios/{filename}'
-            db.session.commit()
-        return redirect(url_for('index'))
+    pitches = Pitch.get_pitches(title)
+    title = 'Home'
+    return render_template('index.html',pitches = pitches,title = title)
+
+@main.route('/Pitch/upload',methods = ['GET','POST'])
+@login_required
+def new_pitch():
+    
+    form = PitchForm()
+
+    if form.validate_on_submit():
         
-    return render_template('index.html')
+        title = form.title.data
+        content = form.content.data
+        category = form.category.data
+        pitch = Pitch(title = title,content = content,category = category)
+        
+        # Updated pitch instance
+        new_pitch = Pitch(title = title,content = content,user = current_user)
+            
+        # save review method
+        new_pitch.save_pitch()
+        flash('Your pitch has been created','Success')
+        return redirect(url_for('index',id = pitch.id ))
+        
+    title = 'New Post'
+    return render_template('new_pitch.html',title = title,pitch_form = form)
 
     
 @main.route('/user/<uname>')
