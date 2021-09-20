@@ -4,8 +4,25 @@ from ..models import User
 from .forms import UpdateProfile
 from .. import db,photos
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
 
 
+@main.route('/',methods = ['GET','POST'])
+def index():
+
+    '''
+    View root page function that returns the index page and its data
+    '''
+    def update_pic(self):
+        if 'audio' in request.files:
+            filename = photos.save(request.files['audio'])
+            path = f'audios/{filename}'
+            db.session.commit()
+        return redirect(url_for('index'))
+        
+    return render_template('index.html')
+
+    
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()

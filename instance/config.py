@@ -1,1 +1,1 @@
-SECRET_KEY = 'hvhfvb4873try7hf74rhfu849'
+SECRET_KEY = 'Flask78WTF78Secret67Key'

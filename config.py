@@ -5,9 +5,11 @@ class Config:
     '''
     General configuration parent class
     '''
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    # SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = 'Flask78WTF78Secret67Key'
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://mash:password@localhost/audio'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
+    UPLOADED_AUDIOS_DEST = 'app/static/audios'
     #  email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
