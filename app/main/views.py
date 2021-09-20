@@ -8,12 +8,9 @@ from flask_login import login_required,current_user
 @main.route('/')
 def pitch(title):
 
-    '''
-    View movie page function that returns the movie details page and its data
-    '''
     pitches = Pitch.get_pitches(title)
-    title = 'Home'
-    return render_template('index.html',pitches = pitches,title = title)
+    titles = 'Home'
+    return render_template('index.html',pitches = pitches,title = titles)
 
 @main.route('/Pitch/upload',methods = ['GET','POST'])
 @login_required
@@ -22,22 +19,21 @@ def new_pitch():
     form = PitchForm()
 
     if form.validate_on_submit():
-        
+
         title = form.title.data
         content = form.content.data
         category = form.category.data
-        pitch = Pitch(title = title,content = content,category = category)
         
         # Updated pitch instance
-        new_pitch = Pitch(title = title,content = content,user = current_user)
+        new_pitch = Pitch(title = title,content = content,category = category,user = current_user)
             
         # save review method
         new_pitch.save_pitch()
         flash('Your pitch has been created','Success')
-        return redirect(url_for('index',id = pitch.id ))
+        return redirect(url_for('index',id = new_pitch.id ))
         
-    title = 'New Post'
-    return render_template('new_pitch.html',title = title,pitch_form = form)
+    titles = 'New Post'
+    return render_template('new_pitch.html',title = titles,pitch_form = form)
 
     
 @main.route('/user/<uname>')

@@ -60,7 +60,7 @@ class Pitch(db.Model):
 
     @classmethod
     def get_pitches(cls,title):
-        pitches = Pitch.query.filter_by(pitch_title=title).all()
+        pitches = Pitch.query.filter_by(title=title).all()
         return pitches
 
     def __repr__(self):

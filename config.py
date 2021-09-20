@@ -7,9 +7,8 @@ class Config:
     '''
     # SECRET_KEY = os.environ.get('SECRET_KEY')
     SECRET_KEY = 'Flask78WTF78Secret67Key'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://mash:password@localhost/audio'
+
     UPLOADED_PHOTOS_DEST ='app/static/photos'
-    UPLOADED_AUDIOS_DEST = 'app/static/audios'
     #  email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
@@ -28,6 +27,10 @@ class ProdConfig(Config):
     pass
 
 
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://mash:password@localhost/audio_test'
+
+
 class DevConfig(Config):
     '''
     Development  configuration child class
@@ -36,10 +39,12 @@ class DevConfig(Config):
         Config: The parent configuration class with General configuration settings
     '''
     
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://mash:password@localhost/audio'
     Debug = True
 
 
 config_options = {
     'development':DevConfig,
-    'production':ProdConfig
+    'production':ProdConfig,
+    'test':TestConfig
 }
