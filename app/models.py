@@ -83,9 +83,5 @@ class Comment(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
-    def get_comments(cls,id):
-        comments = Comment.query.filter_by(pitch_id = id).all()
-        return comments
-
+   
         
