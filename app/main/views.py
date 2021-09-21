@@ -6,20 +6,18 @@ from .. import db,photos
 from flask_login import login_required,current_user
 
 @main.route('/')
-def pitch(title):
+def pitch():
 
-    pitches = Pitch.get_pitches(title)
-    titles = 'Home'
-    return render_template('index.html',pitches = pitches,title = titles)
+    
+    
+    return render_template('index.html')
 
 @main.route('/Pitch/upload',methods = ['GET','POST'])
 @login_required
 def new_pitch():
     
     form = PitchForm()
-
     if form.validate_on_submit():
-
         title = form.title.data
         content = form.content.data
         category = form.category.data
