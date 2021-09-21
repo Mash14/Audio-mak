@@ -3,7 +3,13 @@
     {% for pitch in category %}
     
         <div class="row">
-            <p>Give your feedback on the pitch <a href="{{url_for('main.new_comment')}}">HERE</a></p>
+            <div class="col-md-8">
+                <li></li>
+            </div>
+            <div class="col-md-4">
+                <li></li>
+                <p>Give your feedback on the pitch <a href="{{url_for('main.new_comment')}}">HERE</a></p>
+            </div>
         </div>
 
     {% endfor %}
