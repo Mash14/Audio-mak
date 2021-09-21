@@ -6,11 +6,11 @@ from .. import db,photos
 from flask_login import login_required,current_user
 
 @main.route('/')
-def pitch(category):
+def pitch():
 
-    pitches = Pitch.get_pitches(category)
     
-    return render_template('index.html',pitches = pitches)
+    titles = 'Home of The best Pitches'
+    return render_template('index.html',title = titles)
 
 @main.route('/Pitch/upload',methods = ['GET','POST'])
 @login_required
@@ -27,8 +27,8 @@ def new_pitch():
             
         # save review method
         new_pitch.save_pitch()
-        flash('Your pitch has been created','Success')
-        return redirect(url_for('main.index',id = new_pitch.id))
+        flash('Your pitch has been created.','Success')
+        return redirect(url_for('main.new_comment',id = new_pitch.id))
         
     titles = 'New Post'
     return render_template('new_pitch.html',title = titles,pitch_form = form)
@@ -45,7 +45,7 @@ def new_comment(id):
         comment = Comment(comment_content = comment_content,pitch_id = id)
 
         comment.save_comment()
-        
+        return redirect(url_for('main.index',id = comment.id))
     comment = Comment.query.filter_by(pitch_id = id).all()
 
     return render_template('new_comment.html',comment = comment,comment_form = form)
