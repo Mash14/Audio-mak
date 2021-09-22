@@ -3,14 +3,26 @@
     {% for pitch in category %}
     
         <div class="row">
-            <div class="col-md-8">
-                <li></li>
-            </div>
             <div class="col-md-4">
-                <li></li>
-                <p>Give your feedback on the pitch <a href="{{url_for('main.new_comment')}}">HERE</a></p>
+                <h4>{{pitch.title}}</h4>
+            </div>
+            <div class="col-md-8">
+                <h4>{{pitch.content}}</h4><br>
+                {% if comments %}
+                    {{macro.displayComments(comments)}}
+                    <p>Give your <a  href="{{url_for('main.new_comment',id=pitch.id)}}">feedback</a></p>
+                {% else%}
+                    <p>This pitch has no comments <a  href="{{url_for('main.new_comment',id=pitch.id)}}"> Write a new comment</a></p>
+                {% endif %}
             </div>
         </div>
 
     {% endfor %}
 {% endmacro %}
+
+{% macro displayComments(comments) %}
+    {% for comment in comment_list %}
+        <p><a href="{{url_for('main.comment',id=pitch.id)}}">{{comment.comment_content}}</a></p>
+        
+    {% endfor %}   
+{% endmacro%}

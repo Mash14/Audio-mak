@@ -1,1 +1,0 @@
-SECRET_KEY = 'Flask78WTF78Secret67Key'

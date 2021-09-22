@@ -11,25 +11,20 @@
 {% block content %}
 <div>
     <h1>PITCHES</h1>
+
     <p>In life, you only have 60 seconds to impress someone. 1 minute can make or break you. So how do you make sure that you use your 1 minute to actually say something meaningful?</p>
     <p>I leave that to you</p>
     <p>Make sure to spice things up and do your best</p>
     <p>Give your honest opinions in each given pitch</p>
-    <p>This are the uploaded pitches:</p>
-    <h3> Pickup lines</h3>
-    <ul>
-        {{ macro.displayPitchList(Pickup)}}
-    </ul>
-    <h3> Interview Pitches </h3>
-    <ul>
-        {{ macro.displayPitchList(Interview)}}
-    </ul>
-    <h3> Sales Pitches </h3>
-    <ul>
-        {{ macro.displayPitchList(Sales)}}
-    </ul>
 
-    <p> To upload new pitches <a href="{{url_for('main.new_pitch')}}">Click here</a></p> 
-    
+    <a class="btn btn-success btn-lg text-center" href="{{url_for('main.new_pitch')}}">Upload Pitch</a>
+
+    <p>This are the uploaded pitches:</p>
+    {% if pitches %}
+        {{macro.displayPitchList(pitches)}}
+
+    {% else%}
+        <p>There are no pitches available yet</p>
+    {% endif %}
 </div>
 {% endblock %}

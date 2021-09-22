@@ -8,10 +8,10 @@ import markdown2
 
 @main.route('/')
 def pitch():
-
     
+    pitch=Pitch.query.order_by(Pitch.id.desc()).all() 
     titles = 'Home of The best Pitches'
-    return render_template('index.html',title = titles)
+    return render_template('index.html',title = titles,pitches = pitch)
 
 @main.route('/Pitch/upload',methods = ['GET','POST'])
 @login_required
@@ -29,10 +29,12 @@ def new_pitch():
         # save review method
         new_pitch.save_pitch()
         flash('Your pitch has been created.','Success')
-        return redirect(url_for('main.new_comment',id = new_pitch.id))
-        
+        return redirect(url_for('main.new_pitch',id = new_pitch.id))
+    
+      
+    pitch=Pitch.query.order_by(Pitch.id.desc()).all()  
     titles = 'New Post'
-    return render_template('new_pitch.html',title = titles,pitch_form = form)
+    return render_template('new_pitch.html',title = titles,pitches = pitch,pitch_form = form)
 
 
 @main.route('/pitch/comment/new/<int:id>', methods = ['GET','POST'])
@@ -46,9 +48,9 @@ def new_comment(id):
         comment = Comment(comment_content = comment_content,pitch_id = id)
 
         comment.save_comment()
-        return redirect(url_for('main.index',id = comment.id))
+        return redirect(url_for('main.new_pitch',id = comment.id))
+    
     comment = Comment.query.filter_by(pitch_id = id).all()
-
     return render_template('new_comment.html',comment = comment,comment_form = form)
 
 
